@@ -48,7 +48,7 @@ ggplot(data)+
 ggplot(data)+
   geom_histogram(aes(right_arm), binwidth = 5)
 
-# Note that you must have the column name exactly correct.  Try, for example,
+# Note that you must have the column name EXACTLY correct.  Try, for example,
 # the following code
 ggplot(data)+
   geom_histogram(aes(right arm), binwidth = 10)
