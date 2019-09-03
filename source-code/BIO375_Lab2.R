@@ -30,8 +30,15 @@ data<-read_csv("datasets/demos/2019-09-02_class-data.csv",col_names = TRUE,
   name = col_character() )
 )
 
-# Generate summary statistics
+# Generate summary statistics for the object called "data" that consists of
+# 12 observations of 4 variables
 summary(data)
+
+# The function summary{base} does not provide us with the standard deviation
+
+# We can calculate variance and standard deviation using the function
+# summarise{dplyr}
+summarise(data, sd_ht = sd(height), sd_arm = sd(right_arm))
 
 # Plot height as a histogram
 ggplot(data)+
@@ -55,11 +62,12 @@ ggplot(data)+
 
 # Plot height as a three boxplots, one for each hair color
 ggplot(data)+
-  geom_boxplot(aes(x = hair_color, y = height), notch = TRUE, varwidth = TRUE)
+  geom_boxplot(aes(x = hair_color, y = height), varwidth = TRUE)
 
 ### Assignment
 
-# Load a larger dataset, lovett.csv, and assign the name data2.
+# Load a larger dataset, lovett.csv, and assign the name data2.  
+# IT IS IMPORTANT THAT YOU ASSIGN THE NAME data2
 # Dataset found at datasets/quinn/chpt2/lovett.csv
 # Enter your code below
 
@@ -70,13 +78,28 @@ ggplot(data)+
 
 
 
-# Calculate variance and standard deviation for SO4 and SO4MOD
+# Calculate standard deviation for SO4 and SO4MOD
+# Enter your code below
 
-# Plot histograms of DOC and Modified DOC with appropriate bin sizes
-# To generate a Modified DOC histogram, you will need to execute the following code
 
-data3 -> data2 %>%
-  filter(STREAM != Santa_Cruz)
+
+# Plot histograms of SO4 and Modified SO4 with appropriate bin sizes
+# Enter your code below
+
+
+
+# Plot boxplots of SO4 and Modified SO4 using the code below.  
+# You do not need to write any new code for this part!
+
+# The code below modifies the dataset so it only contains SO4 and Modified SO4
+# using select{dplyr}, and is oriented in long form using gather{tidyr}
+data3 <- data2 %>%
+  select(contains("SO4"))%>%
+  gather(key = "type", value = "measurement", SO4, SO4MOD)
+
+ggplot(data = data3)+
+  geom_boxplot(aes(x = type, y = measurement))
+
 
 
 
