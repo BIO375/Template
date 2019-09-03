@@ -97,8 +97,14 @@ data3 <- data2 %>%
   select(contains("SO4"))%>%
   gather(key = "type", value = "measurement", SO4, SO4MOD)
 
+# The code below plots the two variables as boxplots, zooming in on the
+# 40-75 range where most of the values are found (coord_cartesian).  The red 
+# dots indicate the means (stat_summary).
 ggplot(data = data3)+
-  geom_boxplot(aes(x = type, y = measurement))
+  geom_boxplot(aes(x = type, y = measurement))+
+  coord_cartesian(ylim = c(40, 75))+
+  stat_summary(aes(x = type, y = measurement), fun.y=mean, colour="darkred", geom="point", 
+               shape=18, size=3)
 
 
 
