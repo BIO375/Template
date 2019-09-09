@@ -68,7 +68,7 @@ ggplot(data)+
 
 # Load a larger dataset, lovett.csv, and assign the name data2.  
 # IT IS IMPORTANT THAT YOU ASSIGN THE NAME data2
-# Dataset found at datasets/quinn/chpt2/lovett.csv
+# Upload dataset found at datasets/quinn/chpt2/lovett.csv
 # Enter your code below
 
 
