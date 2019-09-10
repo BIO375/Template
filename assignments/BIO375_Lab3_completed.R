@@ -95,17 +95,25 @@ ggplot(ward)+
 
 ### Assignment
 
-# Load the sanchez.csv file
+# Create the sanchez.csv file in Excel, save it in datasets/demos/sanchez.csv
+# and then load the sanchez.csv file
 # Enter your code here
 
-
-
-
+sanchez <- read_csv("datasets/demos/sanchez.csv")
 
 # Calculate summary statistics
 # Enter your code here
 
+summ_beetle <- sanchez %>%
+  group_by(COLTYPE) %>% 
+  summarise(n = n(),
+            mean = mean(BEETLE96),
+            median = median(BEETLE96),
+            IQR = IQR(BEETLE96),
+            sd = sd(BEETLE96),
+            var = var(BEETLE96))
 
+View(summ_beetle)
 
 
 
@@ -113,6 +121,7 @@ ggplot(ward)+
 # Add a new column of log(y+1) transformed beetle densities to the sanchez dataset
 # Enter your code here
 
+sanchez<-mutate(sanchez, logp1_beetle = log(BEETLE96+1))
 
 
 
@@ -120,12 +129,19 @@ ggplot(ward)+
 # Generate histograms of beetle density by colony type before and after data 
 # transformation
 # Enter your code here
-
-
-
-
+ggplot(sanchez) +
+  geom_histogram(aes(BEETLE96), binwidth = 2)+
+  facet_wrap(~COLTYPE)
+ggplot(sanchez) +
+  geom_histogram(aes(logp1_beetle), binwidth = 0.5)+
+  facet_wrap(~COLTYPE)
 
 # Plot boxplots of beetle density by colony type before and after data 
 # transformation
 # Enter your code here
+
+ggplot(sanchez)+
+  geom_boxplot(aes(x = COLTYPE, y = BEETLE96), notch = TRUE, varwidth = TRUE)
+ggplot(sanchez)+
+  geom_boxplot(aes(x = COLTYPE, y = logp1_beetle), notch = TRUE, varwidth = TRUE)
 
