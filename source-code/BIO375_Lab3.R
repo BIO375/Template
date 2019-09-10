@@ -43,4 +43,10 @@ str(ward)
 # mutate() adds new variables while preserving existing ones.  
 ward<-mutate(ward, squareroot_eggs = sqrt(EGGS))
 
-# Compare the histograms and boxplots of EGGS and squareroot_eggs
+# Compare the histograms and boxplots of EGGS and squareroot_eggs# Plot height as a histogram
+ggplot(ward) +
+  geom_histogram(aes(EGGS), binwidth = 2)+
+  facet_wrap(~ZONE)
+ggplot(ward) +
+  geom_histogram(aes(squareroot_eggs), binwidth = 0.5)+
+  facet_wrap(~ZONE)
