@@ -70,3 +70,4 @@ ggplot(summ_young, aes (x = Survival, y = mean)) +
   scale_fill_grey() +
   labs( x = "Survival", y = "Horn Length (mm)") +
   theme_classic()
+
