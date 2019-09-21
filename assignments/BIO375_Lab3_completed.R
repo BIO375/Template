@@ -145,3 +145,4 @@ ggplot(sanchez)+
 ggplot(sanchez)+
   geom_boxplot(aes(x = COLTYPE, y = logp1_beetle), notch = TRUE, varwidth = TRUE)
 
+

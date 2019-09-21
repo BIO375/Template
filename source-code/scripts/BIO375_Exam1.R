@@ -3,7 +3,6 @@
 # Clean up the working environment
 rm(list = ls())
 
-# Young et al. 2004
 library(tidyverse)
 
 # Read in polyploid Artemesia file
@@ -71,3 +70,13 @@ ggplot(summ_young, aes (x = Survival, y = mean)) +
   labs( x = "Survival", y = "Horn Length (mm)") +
   theme_classic()
 
+# Sage cricket extra credit problem
+data02 <- read_csv("datasets/abd/chapter13/chap13e5SagebrushCrickets.csv")
+ggplot(data02) +
+  geom_histogram(aes(timeToMating), binwidth = 10)+
+  facet_wrap(~feedingStatus)
+
+data02<- mutate(data02, log_time = log(timeToMating))
+ggplot(data02) +
+  geom_histogram(aes(log_time), binwidth = .5)+
+  facet_wrap(~feedingStatus)
