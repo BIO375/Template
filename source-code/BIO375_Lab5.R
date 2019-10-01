@@ -261,7 +261,7 @@ t.test(proportionSurvived ~ troutTreatment, data = salmon, alternative = "greate
 # One-sided, HA that absent is less than present
 t.test(proportionSurvived ~ troutTreatment, data = salmon, alternative = "less", conf.level = 0.95)
 
-## Non-parametric Mann-Whitney U Test #########################
+### Non-parametric Mann-Whitney U Test #########################
 
 # For this we are going to return to the cannibal crickets from Exam 1 Extra Credit
 cricket <- read_csv("datasets/abd/chapter13/chap13e5SagebrushCrickets.csv")
@@ -289,4 +289,5 @@ wilcox.test(timeToMating ~ feedingStatus, data = cricket, alternative = "greater
 
 # One-sided, HA that fed less than starved
 wilcox.test(timeToMating ~ feedingStatus, data = cricket, alternative = "less", conf.level = 0.95)
+
 
