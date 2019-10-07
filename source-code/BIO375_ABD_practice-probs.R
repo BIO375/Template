@@ -12,7 +12,7 @@ library("tidyverse")
 tidyverse_update()
 
 # To perform sign tests, install and load the package DescTools
-install.packages("DescTools")
+# install.packages("DescTools")
 library("DescTools")
 
 # To simplify summary statistics, install and load the package summarytools
@@ -73,6 +73,57 @@ t.test(fish$speciesUpstream, fish$speciesDownstream,
 # b.
 # There was no effect of tributary presence on the species richness of 
 # electric fish (t = -1.910, df = 11, p = 0.083).
+
+# c.
+# Assumed rivers sampled were randomly selected and independent
+# from each other, and assumed differences were normally 
+# distributed.
+
+### Problem 12-33 ######
+mice <- read_csv("datasets/abd/chapter12/chap12q33SpinocerebellarAtaxia.csv")
+summ_mice <- stby(data = mice, INDICES = mice$treatment, FUN = descr)
+# Want 95% CI
+# Start by setting alpha
+alpha <-0.05
+
+# Convert summ_mice to a tibble and calculate CI using mutate
+summ_mice <- summ_mice %>% 
+  tb() %>%
+  mutate(se = sd / sqrt(n.valid),
+         lower_ci = mean - qnorm(1-alpha/2)*se,
+         upper_ci = mean + qnorm(1-alpha/2)*se)
+
+# a. 
+# Answers will vary: dotplot, means +/- 95% CI, strip chart (what ABD calls it)
+
+# b. 
+#Nope.  Overlapping CIs do not necessarily mean no significant difference
+
+# c.
+# Start by checking assumptions
+# Equal variances
+mice_ratio <- summ_mice %>%
+  summarise(max(sd)/min(sd))
+# 1.97 is less than 3 so we are OK
+
+# Normally distributed
+ggplot(mice) +
+  geom_boxplot(aes(x = treatment, y = lifespan))
+ggplot(mice)+
+  geom_qq(aes(sample = lifespan, color = treatment))
+# Not terrific, but it is a small sample.  Given equal sample sizes, it is
+# probably OK.  Proceed with two-sample, two-sided t-test with pooled variance.
+
+t.test(lifespan ~ treatment, data = mice, var.equal = TRUE,
+       alternative = "two.sided", conf.level = 0.95)
+# Exercise increases lifespan in mice affected by spinocerebellar ataxia type I 
+# (two-sample t-test, two-sided: t = 3.15, df = 10, p = 0.01).
+
+# d.
+# 95 % CI of the difference between the means is 12.52 < mu1 -mu2 < 72.81.
+# The number of days by which life span is extended by exercise is from about
+# 12 to 72
+
 
 
 
