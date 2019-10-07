@@ -46,3 +46,39 @@ t.test(eyeSpan ~ food, data = eyespan, alternative = "two.sided",
 # two-sided: t = 8.35, df = 26.57, P < 0.0001).
 
 ### Problem 12-20 ######
+# Data are paired, n = 12
+# Is assumption of normality met?
+fish <- read_csv("datasets/abd/chapter12/chap12q20ElectricFish.csv")
+summ_fish<-descr(fish)
+fish <- mutate(fish, diff = speciesUpstream - speciesDownstream)
+# Because n = 12, just do boxplot and q-q
+ggplot(fish) +
+  geom_boxplot(aes(x = "", y = diff))
+ggplot(fish)+
+  geom_qq(aes(sample = diff))
+# Maybe a bit of right skew when you look at location of median line 
+# within the box, but not terrible skew when you consider the length of
+# top and bottom whiskers. Proceed with parametric  paired t-test
+
+# Research question was "whether presence of tributaries affected local
+# number fish species" so do a two-sided test.
+t.test(fish$speciesUpstream, fish$speciesDownstream, 
+       alternative = "two.sided", paired = TRUE, conf.level = 0.95)
+
+# a.
+# Mean difference: Upstream of tributaries had on average 1.83 fewer 
+# fish species than downstream of tributaries (95% CI of difference:
+# -3.95<mu<-0.280).
+
+# b.
+# There was no effect of tributary presence on the species richness of 
+# electric fish (t = -1.910, df = 11, p = 0.083).
+
+
+
+
+
+
+
+
+
