@@ -124,6 +124,48 @@ t.test(lifespan ~ treatment, data = mice, var.equal = TRUE,
 # The number of days by which life span is extended by exercise is from about
 # 12 to 72
 
+### Problem 13-21 ######
+finch <- read_csv("datasets/abd/chapter13/chap13q21StressAndIncompatibleMates.csv")
+
+# a.
+# Add a column for differences and plot as histogram (n >15), boxplot, q-q plot
+finch <- mutate(finch, diff = corticosterone_concentration_compatible - corticosterone_concentration_incompatible)
+ggplot(finch) +
+  geom_histogram(aes(diff), binwidth = 10)
+# Histogram suggests negative skew (smaller corticosterone concentration in females
+# that mate with compatible males)
+ggplot(finch) +
+  geom_boxplot(aes(x = "", y = diff))
+# boxplot shows 3 outliers on lower end of distribution
+ggplot(finch) +
+  geom_qq(aes(sample = diff))
+# q-q plot looks pretty bad
+
+# b. Paired t-test would probably not be appropriate because of the skew.
+# Note that the skew is negative because I chose to calculate diff as compatible minus
+# incompatible.  The skew would be positive if I chose the opposite order!
+
+# c. 
+# Log transform data, but because you can only log tranform "-diff", which is fine
+# in this particular case as we could have chosen diff = incompatible - compatible
+finch <- mutate(finch, log10diff = log2(-diff))
+# Still not OK because there is one observation that is NaN, or undefined
+
+# d.
+# A sign test is fine, although low power.  We assume that females are independent
+# from each other and randomly sampled from the population.
+
+# e.
+# Because we are testing the null that compatible - incompatible = difference = 0, use 
+# a 2-sided test.
+# mu is equal to zero, per the null above.
+SignTest(finch$diff, 
+         alternative = "two.sided", mu = 0, conf.level = 0.95)
+# When mated with "compatible" males of the same genetic type, female Gouldian 
+# finches have lower blood corticosterone concentrations (sign test, two-sided: S = 1,
+# n = 43, p < 0.0001).
+
+
 
 
 
