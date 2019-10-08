@@ -19,6 +19,10 @@ library("DescTools")
 install.packages("summarytools")
 library("summarytools")
 
+# For later plotting
+install.packages("Hmisc")
+library(Hmisc)
+
 ### Problem 12-18 ######
 eyespan <- read_csv("datasets/abd/chapter12/chap12q18StalkieEyespan.csv")
 
@@ -167,11 +171,30 @@ SignTest(finch$diff,
 
 
 
+### Problem 13-30 ######
+dengue <- read_csv("datasets/abd/chapter13/chap13q30DengueMosquiteTiter.csv")
+
+# a.  
+# Strip chart is a total ABD term.  Basically, it shows mean +/- 95% CI and then
+# the raw data.  You can create this with ggplot2 using:
+ggplot(dengue, aes(x = strain, y = logTiter)) +
+  geom_point() +
+  stat_summary(fun.data = "mean_cl_boot")
 
 
+# b.
+# To rank data, we use the function dplyr::arrange()
+dengue_rank <- arrange (dengue, logTiter)
 
+# c.
+# Because testing hypothesis that strains differ, use two-sided Mann-Whitney
+wilcox <- wilcox.test(logTiter ~ strain, data = dengue, alternative = "two.sided", conf.level = 0.95)
+# Get error message that we cannot compute exact p when there are ties.  But that is OK.
+# Approximate p is fine for us.
+wilcox
 
+# d. 
+# Because some of the original numbers were zero
 
-
-
-
+# e. 
+# No because taking logs does not change the ranks
