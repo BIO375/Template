@@ -25,6 +25,18 @@ model01 <- lm( H1F1alphaExpression ~ species, data = mole_rat)
 summary.aov(model01)
 
 # Problem 8 ####
+feathers <- read_csv("datasets/exams/feathers.csv")
+feathers <- feathers %>%
+  mutate (diff = typical - odd)
+ggplot(feathers) +
+  geom_histogram(aes(diff), binwidth = .05)
+ggplot(feathers) +
+  geom_boxplot(aes(x = "", y = diff))
+ggplot(feathers)+
+  geom_qq(aes(sample = diff))
+
+SignTest(feathers$diff, 
+         alternative = "greater", mu = 0, conf.level = 0.95)
 
 # Problem 9 ####
 baker <- read_csv("datasets/exams/baker.csv")
