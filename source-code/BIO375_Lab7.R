@@ -6,13 +6,13 @@ getwd()
 
 # Install package ggfortify, *note* only do install.packages ONCE
 # ggfortify is a package that works with ggplot2 to make nice plots
-install.packages("ggfortify")
+# install.packages("ggfortify")
 library("ggfortify")
 # multcomp is used for contrasts and multiple comparisons
-install.packages("multcomp")
+# install.packages("multcomp")
 library("multcomp")
 # nlme is used for random effects ANOVA
-install.packages("nlme")
+# install.packages("nlme")
 library("nlme")
 
 # Load tidyverse
@@ -155,11 +155,16 @@ summary(planned)
 tukey <- glht(model01, linfct = mcp(parasite = "Tukey"))
 summary(tukey)
 
+### Multiple Comparisons if package "multcomp" fails ####
+model01_b <- aov(growth.rate ~ parasite, daphnia)
+TukeyHSD(model01_b)
+
+
 ### Non-parametric Kruskal-Wallis test ####
 # This is a very simple test output, it gives you a test statistic, df, and p
 
 kruskal.test(growth.rate ~ parasite, data = daphnia)
-summary(kruskal)
+
 
 ### Robust Welch's ANOVA ####
 
