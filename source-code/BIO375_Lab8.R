@@ -1,4 +1,7 @@
 #### Lab 8: 1-way ANOVA, continued #### 
+# For this lab you will use the datasets described in Chapter 15 of your book but you will 
+# answer the slightly modified questions that I provide below
+
 # Clean up the working environment
 rm(list = ls())
 # Verify working directory, should be ~/Documents/Analyses/lastname_first
@@ -20,72 +23,14 @@ library("tidyverse")
 # Check for updates
 tidyverse_update()
 
+#### Problem 15-22 ####
+# Complete parts a, b, c, d
 
-### Multiple Comparisons for complex designs ####
-# The code I provided you for Lab 7 showed you how to compare specific pairs of treatments
-# Recall we used multcomp::glht in an example where the predictor variable is a factor called
-# parasite and Metschnikowia, Pansporella, Pasteuria, and control are the 4 levels of the
-# factor.  We wanted to know, is each parasite different than the no parasite control?
+#### Problem 15-22 ####
+# Complete parts a and c only
 
-# planned <- glht(model01, linfct = 
-#                   mcp(parasite = c("Metschnikowia - control = 0",
-#                                    "Pansporella - control = 0",
-#                                    "Pasteuria - control = 0")))
+#### Problem 15-26 ####
+# Use the data to perform the correct test.  Please show code for all steps in your process.
 
-
-# In some cases you might want to compare particular *groups* of treatments to each other. For example, Biodiversity II is a long-term experiment designed to determine how 
-# the number of plant species affects the dynamics of ecological processes. Researchers 
-# experimentally manipulated the number of plant species in 9m x 9m plots, 
-# and measured many response variables including carbon and nitrogen content of the plants.
-
-# Plots were seeded in May 1994 to have 1, 2, 4, 8, or 16 species, with roughly 30 replicates
-# of each diversity level. We will look at data from the final year of the study and perform
-# a planned contrast to test whether 1 species plots are different from 2, 4, 8, and 16 
-# species plots, taken together.  In other words 1 spp vs the average of 2,4,8,16 spp.
-
-# We do this by defining a contrast matrix according to the following rules:
-#   1.  groups to be included and excluded in a specific contrast are represented by non-zero
-#       and zero coefficients respectively
-#   2.  groups contrasted to one another have opposing signs (positive or negative)
-#   3.  the number of contrasts cannot exceed p-1
-#   4.  within a given contrast, the sum of positive coefficients should sum to 1 and the
-#       negative coefficients should sum to -1
-
-# Read in the Cedar Creek data
-BDEF <- read_csv("datasets/demos/BDEF.csv", 
-                 col_types = cols(NumSp = col_factor(levels = c("1", 
-                                                                "2", "4", "8", "16"))))
-
-# Start by performing an ANOVA to test whether mean aboveground biomass, biomass, is 
-# different among species diversity treatments, NumSp
-
-BDEF_model01 <- lm(biomass ~ NumSp, data = BDEF)
-autoplot(BDEF_model01)
-summary.aov(BDEF_model01)
-
-# Now we do the annoying work of specifying comparisons.  
-# Look at the levels of our factor, NumSp, paying special attention to the order
-levels(BDEF$NumSp)
-
-# Create a contrast matrix for comparing 1 spp group to the average of groups 2, 4, 8, 16
-# What you are doing is creating a datatable that has one row with a column for each
-# factor level in order (i.e., first column for 1 spp, second column for 2 spp, third for 4 spp)
-# Tell the computer that the first group is just 1 spp by giving it the value of positive 1
-# Tell the group that you are comparing with a second group that includes all of the other
-# factor levels (2, 4, 8, 16).  Must be negative and add to -1.  See below.
-contrasts(BDEF$NumSp) <- cbind(c(1, -0.25, -0.25, -0.25, -0.25))
-contrasts(BDEF$NumSp)
-
-# You see the treatment levels in the first column, the contrast coefficients in the second, 
-# and then a bunch of weird stuff.  R fills in the weird stuff because there are 
-# *technically* supposed to be exactly p-1 planned contrasts.  Whatever.
-
-BDEF_model01 <- lm(biomass ~ NumSp, BDEF)
-summary(BDEF_model01)
-### Multiple Comparisons if package multcomp fails ####
-# (looking at you NS)
-# First define the anova model using the function aov()
-
-model01_b <- aov(growth.rate ~ parasite, daphnia)
-# Then use the function(TukeyHSD)
-TukeyHSD(model01_b)
+#### Problem 15-30 and 15-31 (same data in both problems) ####
+# Use the data to perform the correct test.  Please show code for all steps in your process.
