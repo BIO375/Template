@@ -24,7 +24,7 @@ mole_rat <- read_csv("datasets/abd/review3/rev3q13MoleRatGenetics.csv")
 model01 <- lm( H1F1alphaExpression ~ species, data = mole_rat)
 summary.aov(model01)
 
-# Problem 8 ####
+# Problem 8, Sign test one-tailed ####
 feathers <- read_csv("datasets/exams/feathers.csv")
 feathers <- feathers %>%
   mutate (diff = typical - odd)
@@ -37,6 +37,25 @@ ggplot(feathers)+
 
 SignTest(feathers$diff, 
          alternative = "greater", mu = 0, conf.level = 0.95)
+
+# Problem 8, paired t-test, one-tailed ####
+
+t.test(feathers$typical, feathers$odd, 
+       alternative = "greater", paired =  TRUE, conf.level = 0.95)
+
+# Problem 8, paired t-test, two-tailed ####
+
+t.test(feathers$typical, feathers$odd, 
+       alternative = "two.sided", paired =  TRUE, conf.level = 0.95)
+
+# Problem 8, two-sample t-test, two-tailed ####
+tidy_feathers <- feathers %>%
+  gather(typical, odd, key = type, value = yellowness)
+t.test(yellowness ~ type, data = tidy_feathers, var.equal = TRUE, alternative = "two.sided", conf.level = 0.95)
+
+# Problem 8, Mann-Whitney, two-tailed ####
+
+wilcox.test(yellowness ~ type, data = tidy_feathers, alternative = "two.sided", conf.level = 0.95)
 
 # Problem 9 ####
 baker <- read_csv("datasets/exams/baker.csv")
