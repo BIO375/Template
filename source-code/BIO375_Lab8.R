@@ -32,5 +32,5 @@ tidyverse_update()
 #### Problem 15-26 ####
 # Use the data to perform the correct test.  Please show code for all steps in your process.
 
-#### Problem 15-30 and 15-31 (same data in both problems) ####
+#### Problem 15-30 and/or 15-31 (same data in both problems) ####
 # Use the data to perform the correct test.  Please show code for all steps in your process.
