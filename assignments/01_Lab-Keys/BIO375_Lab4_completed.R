@@ -37,6 +37,11 @@ ggplot(births) +
 ggplot(births)+
   geom_qq(aes(sample = diff))
 
+summ_births <- births %>%
+  summarise(mean_y = mean(diff),
+            sd_y = sd(diff),
+            se_y = sd_y/sqrt(n()),
+            n_y = n())
 
 
 ### Scenario 2 ##################
@@ -59,3 +64,4 @@ ggplot(data01) +
 ggplot(data01)+
   geom_qq(aes(sample = squamosalHornLength, color = Survival)) 
 ratio <-(max(summ_lizard$sd_y))/(min(summ_lizard$sd_y))
+
