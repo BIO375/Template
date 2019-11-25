@@ -65,6 +65,8 @@ ggplot(data = glucose, aes(x = blood_glucose, y = HbA1c))+
 glucCor <- cor.test(~ blood_glucose + HbA1c, data = glucose,
                      method = "pearson")
 glucCor
+r <- glucCor$estimate
+SE
 
 ### Problem 12 ####
 drivers <- read_csv("datasets/exams/DriverVision.csv")
