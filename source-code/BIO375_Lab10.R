@@ -143,19 +143,19 @@ model05
 
 # Use this test when expected cell counts are too low to meet assumptions of Chi-squared
 
-# The book's example for this is an awesome mind-controlling parasite, the fluke Euhaplorchis californiensis.  This is 
-# one of Kevin Lafferty's classic southern California salt marsh parasites and the system is described on page 246 of 
-# your test book.  Long story short, it is possible to compare outcomes (eaten by birds/not eaten by birds) in snails
-# with different levels of parasitism (uninfected/lightly infected/highly infected)
-
-# Using the counts on pg. 246, we can create a table with 2 rows and 3 columns
-tab02 <- matrix(c(1, 10, 37, 49, 35, 9), 2, 3, byrow=TRUE)
-dimnames(tab02) <- list("Outcome" = c("Eaten by birds", "Not eaten by birds"),
-                        "Trematode Infection Level" = c("Uninfected", "Lightly infected", "Highly infected"))
+# The book's example for this is vampire bats. Read the scenario on pg.252.
+# Using the counts on pg. 253, we can create a table with 2 rows and 2 columns
+tab02 <- matrix(c(15,6,7,322), 2, 2, byrow=TRUE)
+dimnames(tab02) <- list("Outcome" = c("Bitten by vampire bat", "Not bitten by vampire bat"),
+                        "Estrus status" = c("Cows in estrus", "Cows not in estrus"))
 as.matrix(tab02)
 model05 <- chisq.test(tab02, correct = FALSE)
-model05
+# R complains because of the violation of assumptions. Just in case you hadn't noticed.
+# You receive a warning message "In chisq.test(tab02, correct = FALSE) :
+#                                   Chi-squared approximation may be incorrect
 
+model06 <- fisher.test(tab02, alternative = "two.sided")
+model06
 
   
   
