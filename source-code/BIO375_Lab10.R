@@ -5,11 +5,14 @@ rm(list = ls())
 # Verify working directory, should be ~/Documents/Analyses/lastname_first
 getwd()
 
-install.packages("ggmosaic")
+# install.packages("ggmosaic")
 library("ggmosaic")
 
-install.packages("epitools")
+# install.packages("epitools")
 library("epitools")
+
+# install.packages("tibble")
+library("tibble")
 
 # Load tidyverse
 library("tidyverse")
@@ -43,7 +46,7 @@ model02 <- binom.test(x= 28, n=41, p=0.5, alternative = "greater", conf.level = 
 model02
 
 # So we can conclude that females occured more frequently than expected in the wilderness population in Alaska 
-# (binomial test: P < 0.05, n=46) but not in the Kevo population (binomial test: P > 0.05 n=41).
+# (binomial test: P < 0.05, n=41) but not in the Kevo population (binomial test: P > 0.05 n=46).
 
 ### Chi-squared goodness of fit ####
 
@@ -137,7 +140,9 @@ dimnames(tab01) <- list("Outcome" = c("Cancer", "No Cancer"),
                       "Treatment" = c("Aspirin", "No Aspirin"))
 as.matrix(tab01)
 model05 <- chisq.test(tab01, correct = FALSE)
-model05
+model05$expected
+
+
 
 ### Fisher's exact test (2x2) ####
 
@@ -145,6 +150,7 @@ model05
 
 # The book's example for this is vampire bats. Read the scenario on pg.252.
 # Using the counts on pg. 253, we can create a table with 2 rows and 2 columns
+
 tab02 <- matrix(c(15,6,7,322), 2, 2, byrow=TRUE)
 dimnames(tab02) <- list("Outcome" = c("Bitten by vampire bat", "Not bitten by vampire bat"),
                         "Estrus status" = c("Cows in estrus", "Cows not in estrus"))
@@ -157,6 +163,11 @@ model05 <- chisq.test(tab02, correct = FALSE)
 model06 <- fisher.test(tab02, alternative = "two.sided")
 model06
 
+# If you start with counts in a contingency table, you need to create longform data to graph it
+tab03<- tab02 %>%
+  as.data.frame() %>%
+  as_tibble() %>%
+  rownames_to_column("rname")
   
   
   

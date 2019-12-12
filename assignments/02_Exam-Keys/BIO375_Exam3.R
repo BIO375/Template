@@ -32,7 +32,7 @@ malaria <- malaria %>%
   mutate(spor_resid = resid(model01))
 
 
-### Problem 9
+### Problem 9 ####
 bacteria <- read_csv("datasets/exams/bacteria.csv")
 model02 <- lm(DENSITY~TREATMNT, data = bacteria)
 summary(model02)
@@ -62,11 +62,22 @@ repeatability <- varAmong / (varAmong + varWithin)
 glucose <- read_csv("datasets/exams/glucose.csv")
 ggplot(data = glucose, aes(x = blood_glucose, y = HbA1c))+
   geom_point()
+ggplot(data = glucose)+
+  geom_boxplot(aes("", blood_glucose))
+ggplot(data = glucose)+
+  geom_boxplot(aes("", HbA1c))
+# Blood glucose boxplot is very symmetrical, HbA1c has one outlier, 
+# but the whiskers are relatively equal and the median more or less
+# centered in the box.  Assumtion of bivariate normality met.
+
 glucCor <- cor.test(~ blood_glucose + HbA1c, data = glucose,
                      method = "pearson")
 glucCor
+
+
 r <- glucCor$estimate
-SE
+SE <-sqrt((1-r^2)/(6))
+t <- r/SE
 
 ### Problem 12 ####
 drivers <- read_csv("datasets/exams/DriverVision.csv")
