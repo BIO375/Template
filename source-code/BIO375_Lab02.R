@@ -71,7 +71,7 @@ ggplot(data)+
 # Upload dataset found at datasets/quinn/chpt2/lovett.csv
 # Enter your code below
 
-
+data2 <- read_csv("datasets/quinn/chpt2/lovett.csv")
 
 # Calculate summary statistics for SO4 and SO4MOD
 # Enter your code below
@@ -101,7 +101,7 @@ data3 <- data2 %>%
 # 40-75 range where most of the values are found (coord_cartesian).  The red 
 # dots indicate the means (stat_summary).
 ggplot(data = data3)+
-  geom_boxplot(aes(x = type, y = measurement))+
+  geom_boxplot(aes(x = type, y = measurement), notch = TRUE)+
   coord_cartesian(ylim = c(40, 75))+
   stat_summary(aes(x = type, y = measurement), fun.y=mean, colour="darkred", geom="point", 
                shape=18, size=3)
