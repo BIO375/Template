@@ -3,15 +3,17 @@
 #' output: github_document
 #' ---
 
-#+ setup, include = FALSE
-library(knitr)
-opts_chunk$set(fig.path = 'figure/scatterplot-', error = TRUE)
+#' #+ setup, include = FALSE
+#' library(knitr)
+#' opts_chunk$set(fig.path = 'figure/scatterplot-', error = TRUE)
+#' 
+#' #' Note: this report is made by rendering an R script. So the narrative is very
+#' #' minimal.
+#' 
+#' library(tibble)
+#' library(ggplot2)
 
-#' Note: this report is made by rendering an R script. So the narrative is very
-#' minimal.
-
-library(tibble)
-library(ggplot2)
+library(tidyverse)
 
 #' Load the [`gapminder`](https://github.com/jennybc/gapminder) data package.
 library(gapminder)
@@ -41,8 +43,9 @@ p <- p + scale_x_log10()
 #' convey continent by color: MAP continent variable to aesthetic color
 p + geom_point(aes(color = continent))
 ## add summary(p)!
-plot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
-  geom_point() + scale_x_log10() # in full detail, up to now
+# plot(gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+#   geom_point() + scale_x_log10()
+# # in full detail, up to now
 
 #' address overplotting: SET alpha transparency and size to a value
 p + geom_point(alpha = (1/3), size = 3)
@@ -80,7 +83,7 @@ ggplot(gapminder, aes(x = year, y = lifeExp,
 
 ggplot(subset(gapminder, continent != "Oceania"),
        aes(x = year, y = lifeExp, group = country, color = country)) +
-  geom_line(lwd = 1, show_guide = FALSE) + facet_wrap(~ continent) +
+  geom_line(lwd = 1, show.legend = FALSE) + facet_wrap(~ continent) +
   scale_color_manual(values = country_colors) +
   #scale_color_brewer()+
   theme_bw() + theme(strip.text = element_text(size = rel(1.1)))
@@ -111,8 +114,8 @@ p <- ggplot(rwanda, aes(x = year, y = lifeExp)) +
   labs(title = "Rwanda") +
   geom_line()
 print(p)
-ggsave("rwanda.pdf")
-ggsave("rwanda.pdf",plot = p)
+ggsave("assignments/03_Demos/rwanda.pdf")
+ggsave("assignments/03_Demos/rwanda.pdf",plot = p)
 
 #' * other ideas?  
 

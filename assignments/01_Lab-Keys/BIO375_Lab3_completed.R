@@ -1,4 +1,4 @@
-### Lab 3. Data manipulation and graphing ####
+### Lab 4. Data manipulation and graphing ####
 
 # Answers to lab
 
@@ -6,7 +6,7 @@
 # https://r4ds.had.co.nz/data-visualisation.html
 # Enter your code here
 
-# Tidyverse book Ch.3 (online version, actually Ch.1 in text version)
+# Tidyverse book Ch.3 (online version, actually Ch.2 in text version)
 rm(list = ls())
 
 #install.packages("tidyverse")
