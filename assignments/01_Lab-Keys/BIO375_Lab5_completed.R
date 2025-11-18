@@ -5,6 +5,8 @@
 # Clean up the working environment
 rm(list = ls())
 library("tidyverse")
+library(skimr)
+library(infer)
 
 # To perform sign tests, install and load the package DescTools
 # install.packages("DescTools")
@@ -42,7 +44,9 @@ t.test(y, alternative = "two.sided", mu = null_mean, conf.level = 0.95)
 
 ### Question 2 #########################
 heart <- read_csv("datasets/demos/HeartAttack_short.csv", col_types = cols(
-  group = col_character()))
+  group = col_factor()))
+skim(heart)
+summary(heart)
 # Look at the summary statistics
 summ_cholest <- heart %>%
   group_by(group) %>% 
@@ -65,6 +69,11 @@ ggplot(heart)+
   geom_qq(aes(sample = cholest, color = group))
 
 # Looks normal, but sd ratio is a little close to 3
+t_test(x = heart,
+       formula = cholest ~ group,
+       order = c("attack", "control"),
+       alternative = "two-sided")
+
 
 # Two-sided
 t.test(cholest ~ group, data = heart, var.equal = TRUE,
